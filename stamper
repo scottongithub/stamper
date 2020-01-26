@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [[ -f ./report ]]; then
+  rm ./report
+fi
+
+for file in *.mp3; do
+  name=$(echo "$file" | cut -f 1 -d '.')
+  if [[ ! -d $name ]]; then
+      mkdir ./$name;
+      sha256=$(sha256sum $file | cut -f 1 -d ' ');
+      echo $sha256 > "$name/$sha256"
+      openssl ts -query -data $file -no_nonce -sha512 -cert -out "$name/${name}.tsq";
+
+      curl -H "Content-Type: application/timestamp-query" \
+        --data-binary "@${name}/${name}.tsq" https://freetsa.org/tsr > \
+        "$name/${name}_freeTSA.tsr";
+
+      mv $file "$name/$file";
+      echo $name >> ./report
+      echo $sha256 >> ./report
+      echo >> ./report
+  fi
+done
+
+printf "\nwherami@gmail.com\n\n"
+cat ./report
