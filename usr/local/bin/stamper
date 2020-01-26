@@ -1,0 +1,40 @@
+#!/bin/bash
+
+. /etc/stamper.conf
+
+# any file with an extension gets picked up
+for file in *.*; do
+
+  # strip file extension and store as 'name'
+  name=$(echo "$file" | cut -f 1 -d '.')
+  if [[ ! -d $name ]]; then
+      mkdir ./$name;
+
+      # make a sha256 of it and store as text file who's name is also the hash
+      sha256=$(sha256sum $file | cut -f 1 -d ' ');
+      echo $sha256 > "$name/$sha256"
+
+      # create a RFC 3161 time-stamp query
+      openssl ts -query -data $file -no_nonce -sha512 -cert -out "$name/${name}.tsq";
+
+      # iterate on timestamp authorities and for each store the result in a file with the authority name appended
+      for timestamping_authority in "${!ta_to_url[@]}"; do
+        printf "\n$name\n${ta_to_url[$timestamping_authority]}\n"
+        curl -H "Content-Type: application/timestamp-query" \
+          --data-binary "@${name}/${name}.tsq" "${ta_to_url[@]}" > \
+          "$name/${name}_${timestamping_authority}.tsr";
+      done
+  else
+    echo "Looks like $file has already been done - please rename it if you'd like to stamp/archive it"
+  fi
+
+  echo $name >> /tmp/stamper_report.txt
+  echo $sha256 >> /tmp/stamper_report.txt
+  echo >> /tmp/stamper_report.txt
+  mv $file "$name/$file";
+done
+
+# prints hashes and email address for easier copy-pasting into non RFC 3161 stampers
+printf "\n$email\n\n"
+cat /tmp/stamper_report.txt
+rm /tmp/stamper_report.txt
