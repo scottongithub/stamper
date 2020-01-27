@@ -10,14 +10,15 @@ for file in *.*; do
   if [[ ! -d $name ]]; then
       mkdir ./$name;
 
-      # make a sha256 of it and store as text file who's name is also the hash
+      # make a sha256 of it and store in a text file whose name is also the hash
       sha256=$(sha256sum $file | cut -f 1 -d ' ');
       echo $sha256 > "$name/$sha256"
 
       # create a RFC 3161 time-stamp query
       openssl ts -query -data $file -no_nonce -sha512 -cert -out "$name/${name}.tsq";
 
-      # iterate on timestamp authorities and for each store the result in a file with the authority name appended
+      # iterate on timestamp authorities and for each store the result in a file with the TA name appended
+      # with associative arrays, a ! first refers to keys and without ! refers to values
       for timestamping_authority in "${!ta_to_url[@]}"; do
         printf "\n$name\n${ta_to_url[$timestamping_authority]}\n"
         curl -H "Content-Type: application/timestamp-query" \
@@ -28,6 +29,7 @@ for file in *.*; do
     echo "Looks like $file has already been done - please rename it if you'd like to stamp/archive it"
   fi
 
+  # add name and its hash to a report that prints to console for easy cut-paste into whatever
   echo $name >> /tmp/stamper_report.txt
   echo $sha256 >> /tmp/stamper_report.txt
   echo >> /tmp/stamper_report.txt
