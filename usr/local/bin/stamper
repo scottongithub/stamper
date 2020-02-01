@@ -5,7 +5,7 @@
 # any file with an extension gets picked up
 for file in *.*; do
 
-  # strip file extension and store as 'name'
+  # strip file extension and store as variable 'name'
   name=$(echo "$file" | cut -f 1 -d '.')
   if [[ ! -d $name ]]; then
       mkdir ./$name;
