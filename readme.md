@@ -9,3 +9,8 @@ It looks in the directory it was called from and iterates on all files in it:
 - create a (RFC 3161) timestamp request of the current file (via openssl)-->archive  
 - for every TSA listed in the config file, submit the timestamp request to the current TSA, append the current TSA name to its reply-->archive
 - source file gets moved to archive
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> fbcad69931e2b764a059f9187e7acea2f572a54f
