@@ -1,6 +1,13 @@
 #!/bin/bash
 
-. /etc/stamper.conf
+# email address to be displayed in shell for copy/paste purposes
+email="wherami@gmail.com"
+
+# Associative array mapping timestamping authority (key) to their API URL (val)
+# the keys will be used in filenaming
+declare -A tsa_to_url
+tsa_to_url[free_tsa]="https://freetsa.org/tsr"
+tsa_to_url[safe_creative]="http://tsa.safecreative.org"
 
 # any file with an extension gets picked up
 for file in *.*; do
