@@ -24,7 +24,7 @@ for file in *.*; do
       echo $sha256 > "$name/$sha256"
 
       # create a RFC 3161 time-stamp query
-      openssl ts -query -data $file -no_nonce -sha512 -cert -out "$name/${name}.tsq" | tee -a "$name/${name}.log";
+      openssl ts -query -data $file -no_nonce -sha512 -cert -out "$name/${name}.tsq";
 
       # iterate on timestamp authorities and for each store the result in a file with the TA name appended
       # with associative arrays, a ! first refers to keys and without ! refers to values
@@ -39,7 +39,7 @@ for file in *.*; do
       curl -X POST "http://api.originstamp.com/v3/timestamp/create"\
            -H "Authorization: $originstamp_key"\
            -H "Content-Type: application/json"\
-           -d '{"comment": "'"$name"'", "hash": "'"$sha256"'"}';
+           -d '{"comment": "'"$name"'", "hash": "'"$sha256"'"}' | tee -a "$name/${name}.log";
 
   else
     echo "Looks like $file has already been done - please rename it if you'd like to stamp/archive it"
