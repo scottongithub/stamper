@@ -8,6 +8,7 @@ originstamp_key=""
 
 # Associative array mapping timestamping authority (key) to their API URL (val)
 # the keys will be used in filenaming
+# a good resource for finding TSA's is https://gist.github.com/Manouchehri/fd754e402d98430243455713efada710
 declare -A tsa_to_url
 tsa_to_url[free_tsa]="https://freetsa.org/tsr"
 tsa_to_url[safe_creative]="http://tsa.safecreative.org"
