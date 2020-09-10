@@ -11,6 +11,8 @@ originstamp_key=""
 declare -A tsa_to_url
 tsa_to_url[free_tsa]="https://freetsa.org/tsr"
 tsa_to_url[safe_creative]="http://tsa.safecreative.org"
+tsa_to_url[digicert]="http://timestamp.digicert.com"
+tsa_to_url[apple]="http://timestamp.apple.com/ts01"
 
 for file in *.*; do
 
