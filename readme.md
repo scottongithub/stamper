@@ -22,7 +22,7 @@ Configuration is the top lines of `stamper.sh`: email (optional), OriginStamp AP
 
 Make it executable: `chmod +x stamper.sh`
 
-Run it: `./stamper.sh`. If all goes well, the archive folder (for a source file `my_song.mp3` will look something like this:
+Run it: `./stamper.sh`. If all goes well, the archive folder (for a source file `my_song.mp3`) will look something like this:
 ```
 .
 ..
