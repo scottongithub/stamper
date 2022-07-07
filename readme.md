@@ -6,10 +6,10 @@ To sign and timestamp files, both directly with trusted timestamping authorities
 It looks in the source directory and iterates on each file (that has an extension and no whitespace):
 - create an archive directory in the destination directory, named after the current file (e.g. "my_song.mp3" becomes a folder "my_song")
 - sign the file with the default GPG profile and save it to the archive folder
-- create a sha256 hash of the singed file and save it to the archive folder
+- create a sha256 hash of the signed file and save it to the archive folder
 - create a (RFC 3161) timestamp request of the signed file (via openssl)-->archive  
-- for every TSA listed in tsa_to_url (associative array), submit the timestamp request to the current TSA, append the current TSA name to its reply-->archive
-- submit the sha256 hash of the signed file to OriginStamp via API and log the results in the .log file-->archive
+- for every TSA listed in tsa_to_url (associative array at the top of the script), submit the timestamp request to the current TSA, append the current TSA name to its reply-->archive
+- submit the sha256 hash of the signed file to OriginStamp via API and log the results in the .log file-->archive. If email address is added, the address will receive a notification from OriginStamp when the blockchain has been updated
 - source file gets moved to archive
 
 # Prerequisites
