@@ -4,7 +4,9 @@ To sign and timestamp files, both directly with trusted timestamping authorities
 
 ## How it Works
 
-![stamper_diagram_v1](https://user-images.githubusercontent.com/21364725/194717347-ba62e092-b38c-4be9-84ff-f0f4b7b7541d.svg)
+<p align="center">
+<img src="https://user-images.githubusercontent.com/21364725/194717695-1f0d1d91-0d0b-4825-a072-b8d13d4395d3.png"/>
+</p>
 
 It looks in the source directory and iterates on each file (that has an extension and no whitespace):
 - create an archive directory in the destination directory, named after the current file (e.g. "cool_song_6.mp3" becomes a folder "cool_song_6")
